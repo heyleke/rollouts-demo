@@ -1,0 +1,14 @@
+content of this repo:
+
+* demo: dummy helm chart
+* demo-wrapper-kustomize: kustomize wrapper around 'demo' chart (included once more for simplicity reasons (no push to registry needed)
+  * has a 'KRM exec function to tranform and include checksum of all files in ../files/
+* files: set of dummy files
+* demo-wrapper-app.yaml: argocd-manifest, pointing to this repo's demo-wrapper-kustomize
+  * requires an Argo CD deployment with yq added (for demo purpose manually copied to the location mentioned in the plugin
+  * requires Argo CD to be configured to allow KRM exec functions:
+  kubectl get cm -n argocd argocd-cm -o yaml
+apiVersion: v1
+data:
+  kustomize.buildOptions: --enable-helm --enable-alpha-plugins --enable-exec
+
